@@ -5,6 +5,8 @@ import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
 import { Coffee, CoffeeSchema } from './entities/coffee.entity';
 
+class MockCoffeeService {}
+
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -19,7 +21,7 @@ import { Coffee, CoffeeSchema } from './entities/coffee.entity';
     ]),
   ],
   controllers: [CoffeesController],
-  providers: [CoffeesService],
+  providers: [{ provide: CoffeesService, useValue: new MockCoffeeService() }],
   exports: [CoffeesService],
 })
 export class CoffeesModule {}
