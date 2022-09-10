@@ -7,6 +7,9 @@ import { CoffeesService } from './coffees.service';
 import { Coffee, CoffeeSchema } from './entities/coffee.entity';
 
 class MockCoffeeService {}
+class ConfigService {}
+class DevelopmentConfigService {}
+class ProductionConfigService {}
 
 @Module({
   imports: [
@@ -24,6 +27,13 @@ class MockCoffeeService {}
   controllers: [CoffeesController],
   providers: [
     CoffeesService,
+    {
+      provide: ConfigService,
+      useClass:
+        process.env.NODE_ENV === 'development'
+          ? DevelopmentConfigService
+          : ProductionConfigService,
+    },
     { provide: COFFEE_BRANDS, useValue: ['buddy brew', 'nescafe'] },
   ],
   exports: [CoffeesService],
