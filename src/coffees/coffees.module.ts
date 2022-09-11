@@ -1,4 +1,5 @@
 import { Injectable, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { EventSchema } from 'src/events/entities/event.entity';
@@ -31,6 +32,7 @@ export class CoffeeBrandsFactory {
         schema: EventSchema,
       },
     ]),
+    ConfigModule,
   ],
   controllers: [CoffeesController],
   providers: [

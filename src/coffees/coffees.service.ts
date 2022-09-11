@@ -1,4 +1,5 @@
 import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
@@ -17,9 +18,12 @@ export class CoffeesService {
     @InjectConnection() private readonly connection: Connection,
     @InjectModel(Event.name) private readonly eventModel: Model<Event>,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
+    private readonly configService: ConfigService,
   ) {
     // console.log(coffeeBrands);
     // console.log('coffee service instantiated');
+    const databseURI = this.configService.get('database.uri');
+    console.log(databseURI);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {

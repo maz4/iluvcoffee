@@ -7,14 +7,12 @@ import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
+import appConfig from './config/app.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      validationSchema: Joi.object({
-        DATABASE_URI: Joi.required(),
-        DATABASE_PORT: Joi.string().default('27017'),
-      }),
+      load: [appConfig],
     }),
     CoffeesModule,
     // MongooseModule.forRoot('mongodb://localhost:27017/nest-course'), - old version
