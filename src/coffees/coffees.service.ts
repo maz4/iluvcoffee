@@ -1,10 +1,11 @@
 import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Event } from 'src/events/entities/event.entity';
 import { COFFEE_BRANDS } from './coffees.constants';
+import coffeesConfig from './config/coffees.config';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
@@ -18,12 +19,17 @@ export class CoffeesService {
     @InjectConnection() private readonly connection: Connection,
     @InjectModel(Event.name) private readonly eventModel: Model<Event>,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
-    private readonly configService: ConfigService,
+    // private readonly configService: ConfigService,
+    @Inject(coffeesConfig.KEY)
+    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
   ) {
     // console.log(coffeeBrands);
     // console.log('coffee service instantiated');
-    const databseURI = this.configService.get('database.uri');
-    console.log(databseURI);
+
+    // const coffeesConfig = this.configService.get('coffees');
+    // console.log(coffeesConfig);
+
+    console.log(coffeesConfiguration.foo);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {

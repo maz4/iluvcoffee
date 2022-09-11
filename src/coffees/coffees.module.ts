@@ -6,6 +6,7 @@ import { EventSchema } from 'src/events/entities/event.entity';
 import { COFFEE_BRANDS } from './coffees.constants';
 import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
+import coffeesConfig from './config/coffees.config';
 import { Coffee, CoffeeSchema } from './entities/coffee.entity';
 
 class MockCoffeeService {}
@@ -32,7 +33,7 @@ export class CoffeeBrandsFactory {
         schema: EventSchema,
       },
     ]),
-    ConfigModule,
+    ConfigModule.forFeature(coffeesConfig),
   ],
   controllers: [CoffeesController],
   providers: [
