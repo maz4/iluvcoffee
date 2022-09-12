@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -24,10 +25,11 @@ export class CoffeesController {
   @Public()
   @Get()
   async findAll(@Query() paginationQuery: PaginationQueryDto) {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
     return this.coffeeService.findAll(paginationQuery);
   }
 
+  // custom pipe could be used here but mongo db has id as strings
+  // findOne(@Param('id', ParseIntPipe) id: string)
   @Get('/:id')
   findOne(@Param('id') id: string) {
     return this.coffeeService.findOne(id);
